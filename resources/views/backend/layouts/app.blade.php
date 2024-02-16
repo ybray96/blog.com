@@ -34,7 +34,7 @@
     @include('backend.layouts._header')
     @include('backend.layouts._sidebar')
 
-    <main id="main" class="main">
+    <main id="main" class="main" style="min-height: 100vh;">
         @yield('content')
     </main>
 
