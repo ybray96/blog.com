@@ -8,6 +8,7 @@ use App\Mail\RegisterMail;
 use Hash;
 use Mail;
 use Str;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -24,6 +25,37 @@ class AuthController extends Controller
     public function forgot()
     {
         return view('auth.forgot');
+    }
+
+    public function auth_login(Request $request)
+    {
+        $remember = !empty($remember->remember) ? true :false;
+        if(Auth::attempt(['email'=> $request->email, 'password'=>$request->password], $remember))
+        {
+            if(!empty(Auth::user()->email_verified_at))
+            {
+                echo "Succesfully";
+                die;
+            }
+            else
+            {
+                $user_id=Auth::user()->id;
+                Auth::logout();
+
+                $save=User::getSingle($user_id);
+                $save->remember_token = Str::random(40);
+                $save->save();
+                
+
+                Mail::to($save->email)->send(new RegisterMail($save));
+                return redirect()->back()->with('success', "Please first you can verify your email address");
+            }
+        }
+        else
+        {
+            return redirect()->back()->with('error', "Please enter currect email and password");
+        }
+
     }
 
     public function create_user(Request $request)
