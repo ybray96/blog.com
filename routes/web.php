@@ -29,4 +29,7 @@ Route::post('register', [AuthController::class, 'create_user']);
 Route::get('verify/{token}', [AuthController::class, 'verify']);
 
 Route::get('forgot-password', [AuthController::class, 'forgot']);
+Route::post('forgot-password', [AuthController::class, 'forgot_password']);
 
+Route::get('reset/{token}', [AuthController::class, 'reset']);
+Route::post('reset/{token}', [AuthController::class, 'post_reset']);

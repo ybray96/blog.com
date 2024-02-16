@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Forgot Password</title>
+  <title>Reset Password</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -52,20 +52,22 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Forgot Password</h5>
-                    <p class="text-center small">Enter your email to forgot password</p>
+                    <h5 class="card-title text-center pb-0 fs-4">Reset Password</h5>
                   </div>
                   @include('layouts._message')
                   <form class="row g-3 needs-validation" action="" method="post" >
                     {{ csrf_field() }}
                     <div class="col-12">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" id="email" required>
+                      <label for="Password" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="Password" required>
                     </div>
-
+                    <div class="col-12">
+                      <label for="Password" class="form-label">Confirm Password</label>
+                      <input type="password" name="cpassword" class="form-control" id="Password" required>
+                    </div>
                     
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Forgot</button>
+                      <button class="btn btn-primary w-100" type="submit">Reset</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Don't have account? <a href="{{ url('register' )}}">Create an account</a></p>
