@@ -13,10 +13,13 @@
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">Name</label>
                   <input type="text" value=" {{ $getRecord->name }}" class="form-control" name="name" required id="inputNanme4">
+                  <div style="color:red">{{ $errors->first('name') }}</div>
                 </div>
                 <div class="col-12">
                   <label for="inputEmail4" class="form-label">Email</label>
-                  <input type="email" value=" {{ $getRecord->email }}"  class="form-control" name="email" required id="inputEmail4">
+                  <input type="email" value=" {{ $getRecord->email }}"  class="form-control" name="email"
+                   required id="inputEmail4">
+                   <div style="color:red">{{ $errors->first('email') }}</div>
                 </div>
                 <div class="col-12">
                   <label for="inputPassword4" class="form-label">Password</label>
