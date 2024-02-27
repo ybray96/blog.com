@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 18 2024 г., 19:45
--- Версия сервера: 5.7.39
+-- Время создания: Фев 27 2024 г., 13:39
+-- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,19 +24,51 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `blog`
+--
+
+CREATE TABLE `blog` (
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `category_id` int DEFAULT NULL,
+  `image_file` varchar(255) DEFAULT NULL,
+  `description` longtext,
+  `meta_description` varchar(500) DEFAULT NULL,
+  `meta_keywords` varchar(500) DEFAULT NULL,
+  `is_publish` tinyint NOT NULL DEFAULT '0',
+  `status` tinyint NOT NULL DEFAULT '0',
+  `is_delete` tinyint NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `blog`
+--
+
+INSERT INTO `blog` (`id`, `user_id`, `title`, `slug`, `category_id`, `image_file`, `description`, `meta_description`, `meta_keywords`, `is_publish`, `status`, `is_delete`, `created_at`, `updated_at`) VALUES
+(1, 1, 'testtt', '11111111', 2, '11111111.py', '<p>testtt</p>', 'testtt', 'testtt', 0, 0, 1, '2024-02-27 09:40:20', '2024-02-27 10:37:32'),
+(2, 1, 'ttttttttt', 'rrrrrrrrrrrr', 4, 'rrrrrrrrrrrr.jpg', '<p>tttttttt</p>', 'tttttttt', 'ttttttttttt', 0, 1, 0, '2024-02-27 10:37:11', '2024-02-27 10:37:27'),
+(3, 1, 'yyyyyyy', 'yyyyyyy', 1, 'yyyyyyy.jpg', '<p>yyyyyyyy</p>', 'yyyyyyyy', 'yyyyyyyy', 1, 1, 0, '2024-02-27 10:38:08', '2024-02-27 10:38:08');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `category`
 --
 
 CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keywords` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: active 1:inactive',
-  `is_delete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: not delete 1: delete',
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '1: active 0:inactive',
+  `is_delete` tinyint NOT NULL DEFAULT '0' COMMENT '0: not delete 1: delete',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -46,8 +78,10 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `slug`, `title`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `is_delete`, `created_at`, `updated_at`) VALUES
-(1, 'php', 'php', 'php', 'php ', 'php php', 'php', 0, 0, '2024-02-05 22:41:28', '2024-02-17 22:41:28'),
-(2, 'c#', 'c#', 'c#', 'c#', 'c#', 'c#', 0, 0, '2024-02-01 22:43:20', '2024-02-08 22:43:20');
+(1, 'php test', 'php-test', 'php test', 'php test', '', 'php test', 1, 0, '2024-02-20 07:02:45', '2024-02-20 07:02:45'),
+(2, 'C++', 'c', 'C++', 'C++', '', '', 1, 0, '2024-02-20 07:07:35', '2024-02-20 07:07:35'),
+(3, 'emaxple1', 'emaxple1', 'emaxple', 'emaxple', '', '', 0, 1, '2024-02-20 07:19:11', '2024-02-20 07:24:48'),
+(4, 'C', 'c', 'cc', 'c', '', 'c', 1, 0, '2024-02-27 05:03:52', '2024-02-27 05:04:01');
 
 -- --------------------------------------------------------
 
@@ -56,7 +90,7 @@ INSERT INTO `category` (`id`, `name`, `slug`, `title`, `meta_title`, `meta_descr
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -72,9 +106,9 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int UNSIGNED NOT NULL,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -106,9 +140,9 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `abilities` text COLLATE utf8mb4_unicode_ci,
@@ -125,15 +159,15 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
+  `is_admin` tinyint DEFAULT '0' COMMENT '0: user 1:admin',
+  `is_delete` tinyint NOT NULL DEFAULT '0' COMMENT '0: not delete 1: deleted',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0: not verify 1: verify',
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_admin` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:user, 1:admin',
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: not verify 1: verify',
-  `is_delete` tinyint(4) DEFAULT '0' COMMENT '0: not delete 1: deleted',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -142,21 +176,31 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `is_admin`, `status`, `is_delete`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@mail.ru', '2024-02-16 15:52:15', '$2y$12$5qTQOpKBec9iIZok6o2NtukNfLWxEbkF41RihRl.kbZH3xPZbp0.q', 'MxLp4L3IQyZ5QBi9rVxSQWj6OtZ9YpdTAJba46TYHUOt9of1zcprkUXrcv7n', 1, 0, 0, '2024-02-15 18:02:40', '2024-02-16 15:52:15'),
-(2, 'sample', 'sample@mail.ru', NULL, '$2y$12$IDeh92GF.neuamcTL//B7esKclNdimY0EOMhqZ9M39XTz4FhGxqBi', NULL, 0, 0, 0, '2024-02-15 18:07:27', '2024-02-15 18:07:27'),
-(3, 'Sample', 'example@mil.ru', NULL, '$2y$12$2LaZHAuoBkKoUxkHbse9cOtver4VPj.qn0Lcq7HJMzx475V2mmOru', NULL, 0, 0, 0, '2024-02-15 18:15:58', '2024-02-15 18:15:58'),
-(4, 'example', 'example@mail.ru', '2024-02-16 15:50:49', '$2y$12$UiXs3NxFDsdoi/z71Sff7.rnc1JqV50bNzh8djjVlFqm.eYNkdmeO', 'TWyetg3HG1A2k0rk9TfEaXg7ErcN4vr21PORLXPn', 0, 0, 0, '2024-02-15 18:26:44', '2024-02-16 15:50:49'),
-(5, 'example1', 'example1@mil.ru', NULL, '$2y$12$1GmuWENej7yFzA/ZzTgowex3FrOsE989wccRErUQAGtsLeb98b/hW', NULL, 0, 0, 0, '2024-02-15 18:38:03', '2024-02-15 18:38:03'),
-(6, 'admin', 'admin@mail.kz', NULL, '$2y$12$gzAG2IY.Mrv1I8JwJC6/s.xuGRHgpZQfL.0hUQMF0DHMPUgmOhDl2', 'Gd7H7PhpcEjfmaiJ5UA5rD91MjdbQWRxjUJSVT08', 0, 0, 0, '2024-02-16 15:45:59', '2024-02-16 15:45:59'),
-(7, 'das', 'das@m.ru', '2024-02-16 15:50:12', '$2y$12$MUUqEOZ4RV4PorDs70jQlu7qHD5YRbx3OG3lVc7xBKKAY.3o64SLW', 'Fx0dIjVh0rvt3w2jDE1Rsr9XhoFJW28S3QovYRh9', 0, 0, 0, '2024-02-16 15:50:00', '2024-02-16 15:50:12'),
-(8, 'fffff', 'ffffffff@fff.fff', NULL, '$2y$12$S4MJHweopt48Rz/kbsMxLeBk48NzuiZj5N3J0raY0WrpCcBpnqC0m', NULL, 0, 1, 0, '2024-02-18 11:48:30', '2024-02-18 11:48:30'),
-(9, 'dddd', 'ddd@dddd.dddd', NULL, '$2y$12$oxKSHKIqdKKz9dNuqyDhDee9.KpLLQ9796nuAutQ9LmW2qiXcfBiO', NULL, 0, 1, 0, '2024-02-18 11:50:50', '2024-02-18 11:50:50'),
-(10, 'ffffffffffffff', 'fffffffff@ffffff.fffff', NULL, '$2y$12$vXP1LBA8TOQ.RVWhlMr7PuwV3pHLjopvCaZRf3ZEL/5Ze4qGUyZbW', NULL, 0, 1, 1, '2024-02-18 11:51:39', '2024-02-18 12:25:55');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `is_admin`, `is_delete`, `status`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin@mail.ru', '2024-02-16 08:06:59', 1, 0, 0, '$2y$12$3Z/0gOmVWwEfLQhb4vCwaOwoGUzMq2RDNy4A38yIk/b.I5MpXY0rK', 't2zPFeX0jOqkSlTjnbBK3acpucl3W3MFV2s1JF99Q7AzIuvN1Cp7rTtgvOrB', '2024-02-16 05:30:17', '2024-02-20 02:52:01'),
+(2, 'emaxple', 'example@mail.ru', NULL, 0, 0, 0, '$2y$12$z8O6fM0qPhT18kxMH1KbLumirH2I8/Rq20EeAQ6DRLSrwrg47jOTq', 'V8Rl7GWqWNbg4e1pVdOTDslnRmzjgh31apuGYwAc', '2024-02-16 05:32:20', '2024-02-16 08:11:51'),
+(3, 'emaxple1', 'example1@mail.ru', NULL, 0, 0, 0, '$2y$12$Tj5NyOZ1L9CTntob6A/FaO89pYibNFY1JnChS2sQIh44LiE3hYtQy', 'koBBw2388yDYx6IOqZBh9L6jNiUFlIxyZZ26lqQq', '2024-02-16 05:32:46', '2024-02-16 08:08:46'),
+(4, 'dastan', 'dastan@mi.ln', NULL, 0, 0, 0, '$2y$12$JMj6H9PIBSFgdlsH6Rg5..xuzHSp3YEz/Ac6PL5LiBhB.82jYQEqe', 'kyejRaBET7uUONQRUFcHlsV6ItRNJWxxJQBUGVZN', '2024-02-16 06:04:17', '2024-02-16 06:04:17'),
+(5, 'dastan1', 'dastan1@mi.ln', NULL, 0, 0, 0, '$2y$12$HoCetjqlZxzcdw5SWjDCjeqOap0rqfcH6ADIjU57/tIUYHEuhXzuG', 'UmxXczdDiRpMNHyzAiLli9HAlKrOKRSNRwPf3Flt', '2024-02-16 06:06:27', '2024-02-16 06:06:27'),
+(6, 'ascacsa', 'das@dfs.ru', NULL, 0, 0, 0, '$2y$12$BW/BACddwq7YBMSFuKI1xuJ/UNQQ9u0GBqvwrbv.2ou.Zh4FElfFC', 'BFow37yL8ZJOcO59TRrhhhmyjbYqYfCc3H5pF7Nm', '2024-02-16 06:10:20', '2024-02-16 08:19:50'),
+(7, 'dsa', 'aaaaaa@nnm.ru', '2024-02-16 06:28:42', 0, 0, 0, '$2y$12$lcHQhbKUfjCB8O3x.BuIaOIjW9te.kO71/GHuyFq5Uv98H4KVNb/e', 'LMHlIXqaNzeblW1n0IHDTLWonOEQ7HZEYqKyPki3', '2024-02-16 06:11:38', '2024-02-16 06:28:42'),
+(8, 'testtt', 'test@mail.ru', '2024-02-16 06:25:06', 0, 0, 0, '$2y$12$2ArQEAxaDq6/cZCmdHflcOTAmYv3Zj8B6c8vTgUCqYHf2MJp5keAe', 'sBcgoxF5z4KIVX6tFnP83Caj3mlW8L1P076Dl2e9', '2024-02-16 06:17:54', '2024-02-16 06:25:06'),
+(9, 'test', 'test@gmail.com', '2024-02-16 06:29:40', 0, 0, 0, '$2y$12$caxmhCgwhrcW7DQMY9vC2OUN3sgL9ROoRpuSNnVe5j5R7IqWU4qq.', '6LhirHMTWQAdkK1T7g6FSnSyyS0NU8M50ZQI4tCJ', '2024-02-16 06:29:24', '2024-02-16 06:29:40'),
+(10, 'test2', 'test2@mail.ru', '2024-02-16 07:10:49', 0, 0, 0, '$2y$12$KiEPDK3foskwOzALrrd1FOxefK/0Yb5xfiX853kfL/xZs0rqmVoBK', 'ARUGKZukVhtdg21Cy31YLkPyaQnvoGYfLgN2QBmN', '2024-02-16 07:09:54', '2024-02-16 07:10:49'),
+(11, 'das', 'das@das.ru', NULL, 0, 0, 0, '$2y$12$.BKIQNlPIQt.BV5iVwYGyuVFlpf.QmYoPmZKklgb5LVzqi28YHgxS', 'CqQMrZRTjWnWJAy2CjqTYeP2zwUDBaaYItLgit5m', '2024-02-16 08:21:23', '2024-02-16 08:21:56'),
+(12, 'das1', 'das1@d.ru', '2024-02-16 08:23:38', 0, 0, 0, '$2y$12$oEQLEZO1VqThYk8se5uL.uoD4M5uU6iH6DT76VIswQkHgffNmPUmC', 'snodKOvEyhDw85t8fkAJCwVkTpPm3P1MlY4ROTAN', '2024-02-16 08:23:28', '2024-02-16 08:23:38'),
+(13, 'ffff', 'ffff@ffff.ru', '2024-02-16 08:28:07', 0, 0, 0, '$2y$12$fjjGPdAGDl3JywST9jBSWeDFhh4/1BTY.18idshKCWt.qE9vZhF7O', 'lEtvLKbg2LgkfEVahumV1TaGxgYhG3oBxVhuZzjE', '2024-02-16 08:27:41', '2024-02-16 08:28:07'),
+(14, 'dastand', 'dastand@fgdfg.kj', NULL, 0, 0, 1, '$2y$12$GKjt9JZ2IJXkJeE7Yv7gU.B6M5keHnU1nd/HR8HuYfka8Y9Ho3M8S', NULL, '2024-02-20 02:54:57', '2024-02-20 02:54:57');
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `blog`
+--
+ALTER TABLE `blog`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `category`
@@ -203,34 +247,40 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `blog`
+--
+ALTER TABLE `blog`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
