@@ -63,6 +63,7 @@ Route::group(['middleware'=>'adminuser'], function(){
 
     Route::get('panel/blog/list', [BlogController::class, 'blog']);
     Route::get('panel/blog/add', [BlogController::class, 'add_blog']);
+    Route::post('panel/blog/add', [BlogController::class, 'insert_blog']);
 
 
 });

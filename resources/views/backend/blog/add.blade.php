@@ -8,7 +8,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Add New Blog</h5>
-              <form class="row g-3" action="" method="post">
+              <form class="row g-3" action="" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}               
 
                 <div class="col-12">
@@ -18,8 +18,11 @@
 
                 <div class="col-12">
                     <label class="form-label">Category *</label>
-                    <select class="form-control" name="category_id">
+                    <select class="form-control" name="category_id" required>
                         <option value="">Select Category</option>
+                        @foreach ( $getCategory as $value )
+                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
                     </select>                    
                 </div>
                 
@@ -29,8 +32,8 @@
                 </div>
                 
                 <div class="col-12">
-                    <label class="form-label">Description *</label>
-                    <textarea class="form-control"></textarea>            
+                    <label class="form-label ">Description *</label>
+                    <textarea class="form-control tinymce-editor" name="description"></textarea>            
                 </div>   
                 
                 <div class="col-12">
@@ -42,7 +45,7 @@
 
                 <div class="col-12">
                   <label class="form-label">Meta Description </label>
-                  <textarea class="form control tinymce-editor" name="meta-description"></textarea>
+                  <textarea class="form-control" name="meta_description"></textarea>
                   <div style="color:red">{{ $errors->first('meta_description') }}</div>
                 </div>
                 
